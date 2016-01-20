@@ -49,6 +49,12 @@ public class ApiManager {
                 System.out.println(volleyError);
             }
         });
-        AppController.getInstance().addToRequestQueue(request);
+        if(request == null) {
+            System.out.println("Something went wrong");
+        }
+        if(AppController.getInstance() == null) {
+            System.out.println("Something went wrong with app controller");
+        }
+//        AppController.getInstance().addToRequestQueue(request);
     }
 }
