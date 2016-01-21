@@ -1,6 +1,7 @@
 package notrino.gcm_android.utils;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -11,6 +12,7 @@ import com.google.android.gms.iid.InstanceID;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import notrino.gcm_android.controllers.AppController;
@@ -29,32 +31,45 @@ public class ApiManager {
         this.context = context;
     }
 
+    /** A nested Asynchronous Task class for getting GCM registration tokens. */
+    private class ReqTask extends AsyncTask<String, String, String> {
+
+        public String regToken;
+        public String username;
+        public String password;
+        public String email;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            username = strings[0];
+            password = strings[1];
+            email = strings[2];
+            InstanceID instanceID = InstanceID.getInstance(context);
+            try {
+                regToken = instanceID.getToken(Constants.SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            System.out.println("Async: " + username);
+        }
+    }
+
     /** Create a new user. (Happens when onboarding). */
-    public void createUser(HashMap<String, String> params) {
+    public void createUser(ArrayList<String> parameters) {
+
+        //Extract parameters
+        String username = parameters.get(0);
+        String password = parameters.get(1);
+        String email = parameters.get(2);
         InstanceID instanceID = InstanceID.getInstance(context);
-        try {
-            String reg_token = instanceID.getToken(Constants.SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-            params.put("reg_token", reg_token);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataRequest request = new DataRequest(Request.Method.POST, null, params, Constants.CREATE_USER_API, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                System.out.println(jsonObject);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                System.out.println(volleyError);
-            }
-        });
-        if(request == null) {
-            System.out.println("Something went wrong");
-        }
-        if(AppController.getInstance() == null) {
-            System.out.println("Something went wrong with app controller");
-        }
-//        AppController.getInstance().addToRequestQueue(request);
+
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
+        System.out.println("email: " + email);
+        ReqTask reqTask = (ReqTask) new ReqTask().execute(username, password, email);
     }
 }

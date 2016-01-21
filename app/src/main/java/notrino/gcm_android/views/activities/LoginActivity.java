@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import notrino.gcm_android.R;
@@ -24,22 +25,22 @@ public class LoginActivity extends AppCompatActivity{
 
         final ApiManager api = new ApiManager(this);
 
-        TextView emailView = (TextView)findViewById(R.id.email);
-        TextView userView = (TextView)findViewById(R.id.username);
-        TextView passView = (TextView)findViewById(R.id.password);
-
-        final String email = emailView.getText().toString();
-        final String username = userView.getText().toString();
-        final String password = passView.getText().toString();
+        final TextView emailView = (TextView)findViewById(R.id.email);
+        final TextView userView = (TextView)findViewById(R.id.username);
+        final TextView passView = (TextView)findViewById(R.id.password);
 
         Button createAcc = (Button)findViewById(R.id.create_user);
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("username", username);
-                params.put("password", password);
+                String email = emailView.getText().toString();
+                String username = userView.getText().toString();
+                String password = passView.getText().toString();
+
+                ArrayList<String> params = new ArrayList<String>();
+                params.add(username);
+                params.add(password);
+                params.add(email);
                 api.createUser(params);
             }
         });
