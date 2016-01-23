@@ -43,19 +43,16 @@ public class DataRequest extends Request {
     }
 
     @Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse networkResponse) {
+    protected Response parseNetworkResponse(NetworkResponse networkResponse) {
         try {
             String json = new String(
                     networkResponse.data,
                     HttpHeaderParser.parseCharset(networkResponse.headers));
-            return Response.success (
-                    new JSONObject(json),
+            return Response.success(
+                    json,
                     HttpHeaderParser.parseCacheHeaders(networkResponse)
             );
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return Response.error(new ParseError(e));
-        } catch (JSONException e) {
             e.printStackTrace();
             return Response.error(new ParseError(e));
         }

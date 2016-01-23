@@ -5,8 +5,7 @@ package notrino.gcm_android.models;
  */
 public class Constants {
     public final static String SENDER_ID = "578010136131";
-    public final static String CREATE_USER_API = "https://fast-taiga-6198.herokuapp.com/api/v1/gcm/users/register";
-    public final static String CREATE_GCM_API = "https://fast-taiga-6198.herokuapp.com/api/v1/gcm/upload";
-    public final static String INDEX_USER_API = "https://fast-taiga-6198.herokuapp.com/api/v1/gcm/users";
-    public final static String INDEX_GCM_API = "https://fast-taiga-6198.herokuapp.com/api/v1/gcm/index";
+    public final static String CREATE_USER_API = "https://infinite-anchorage-62838.herokuapp.com/api/v1/users/register";
+    public final static String LOGIN_USER_API = "https://infinite-anchorage-62838.herokuapp.com/api/v1/users/login";
+    public final static String UPDATE_USER_API = "https://infinite-anchorage-62838.herokuapp.com/api/v1/users/update";
 }

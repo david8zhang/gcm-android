@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity{
         final ApiManager api = new ApiManager(this);
 
         final TextView emailView = (TextView)findViewById(R.id.email);
-        final TextView userView = (TextView)findViewById(R.id.username);
         final TextView passView = (TextView)findViewById(R.id.password);
 
         Button createAcc = (Button)findViewById(R.id.create_user);
@@ -34,14 +33,26 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String email = emailView.getText().toString();
-                String username = userView.getText().toString();
                 String password = passView.getText().toString();
 
-                ArrayList<String> params = new ArrayList<String>();
-                params.add(username);
+                ArrayList<String> params = new ArrayList<>();
                 params.add(password);
                 params.add(email);
                 api.createUser(params);
+            }
+        });
+
+        Button login = (Button)findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = emailView.getText().toString();
+                String password = passView.getText().toString();
+
+                ArrayList<String> params = new ArrayList<>();
+                params.add(password);
+                params.add(email);
+                api.authUser(params);
             }
         });
     }

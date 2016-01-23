@@ -1,14 +1,11 @@
-package notrino.gcm_android.views.activities;
+package notrino.notrino_mvp.views.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-import notrino.gcm_android.R;
+import notrino.notrino_mvp.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,16 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button signUp = (Button)findViewById(R.id.sign_up);
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toLogin = new Intent(MainActivity.this, LoginActivity.class);
-                toLogin.putExtra("isAuth", false);
-                MainActivity.this.startActivity(toLogin);
-            }
-        });
     }
 
     @Override
